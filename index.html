@@ -321,6 +321,115 @@
     }
     #mobile-menu.open { display: flex; }
 
+    /* ── RESPONSIVE LAYOUT CLASSES ── */
+    /* Grid helpers — add class to container, override in MQ below */
+    .rg-split    { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .rg-3col     { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .rg-steps    { display: grid; grid-template-columns: repeat(3,1fr); }
+    .rg-values-r { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.04); }
+    .rg-gallery  { display: grid; grid-template-columns: repeat(4,1fr); grid-template-rows: 220px 220px; }
+    .rg-stats    { display: grid; grid-template-columns: repeat(3,1fr); text-align: center; }
+    .rg-footer   { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 4rem; margin-bottom: 3rem; }
+
+    /* Navbar show/hide */
+    #nav-desktop { display: flex; align-items: center; gap: 2.25rem; }
+    #hamburger   { display: none; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+
+      /* Navbar */
+      #nav-desktop { display: none !important; }
+      #hamburger   { display: flex !important; }
+      .btn-nav span.btn-nav-text { display: none; } /* hide text, keep icon */
+
+      /* Hero */
+      #hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 7rem 1.25rem 3rem; }
+      .hero-right { height: 260px; }
+
+      /* Section padding */
+      .sec-pad { padding: 3.5rem 0 !important; }
+      .sec-inner { padding: 0 1.25rem !important; }
+
+      /* All 2-col splits → 1 col */
+      .rg-split { grid-template-columns: 1fr; gap: 2.5rem; }
+
+      /* Reverse order on splits where image comes first on desktop */
+      .rg-split.img-first > *:first-child { order: 2; }
+      .rg-split.img-first > *:last-child  { order: 1; }
+
+      /* 3-col grids → 1 col */
+      .rg-3col  { grid-template-columns: 1fr; gap: 1rem; }
+
+      /* Steps → 1 col, no dividers */
+      .rg-steps { grid-template-columns: 1fr; }
+      .step-card { border-right: none !important; border-bottom: 1px solid rgba(179,154,112,0.15); }
+      .step-card:last-child { border-bottom: none; }
+
+      /* Values rows → 1 col */
+      .rg-values-r { grid-template-columns: 1fr; }
+
+      /* Gallery → 2 col, fixed height rows */
+      .rg-gallery {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(3, 160px);
+      }
+      /* Reset the spanning featured item */
+      .rg-gallery .gallery-featured {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+
+      /* Stats → stack with top/bottom borders instead of side */
+      .rg-stats { grid-template-columns: 1fr; }
+      .rg-stats > div { border: none !important; border-bottom: 1px solid rgba(179,154,112,0.15) !important; padding: 1.75rem 0 !important; }
+      .rg-stats > div:last-child { border-bottom: none !important; }
+      .stat-num { font-size: 2.5rem; }
+
+      /* Footer → 1 col */
+      .rg-footer { grid-template-columns: 1fr; gap: 2rem; }
+
+      /* About stacked images → smaller height */
+      .about-imgs { height: 340px !important; grid-template-rows: 1fr 1fr !important; }
+      .about-imgs > div { height: 100% !important; }
+      .areas-map { height: 220px !important; }
+
+      /* Insurance stat card — pull back inside viewport */
+      .ins-stat-card { position: static !important; margin: 1rem 0 0 !important; display: inline-flex; flex-direction: column; }
+
+      /* Values top image → hide on mobile to save space */
+      .values-img { display: none !important; }
+      .rg-split.values-top { grid-template-columns: 1fr; }
+
+      /* CTA buttons — stack full width */
+      .cta-btns { flex-direction: column !important; }
+      .cta-btns a { width: 100%; justify-content: center; }
+
+      /* Hero CTA buttons — stack */
+      .hero-btns { flex-direction: column !important; }
+      .hero-btns a { width: 100%; justify-content: center; }
+
+      /* Contact row — stack */
+      .contact-row { flex-direction: column !important; gap: 1rem !important; }
+
+      /* Inner container padding on mobile */
+      .sec-inner { padding: 0 1.25rem !important; }
+
+      /* Section vertical padding reduction */
+      section[style*="padding:6rem"] { padding: 3.5rem 0 !important; }
+      section[style*="padding:4.5rem"] { padding: 2.5rem 0 !important; }
+
+      /* Typography tweaks */
+      h1, h2 { word-break: break-word; }
+    }
+
+    @media (max-width: 480px) {
+      .rg-gallery { grid-template-columns: 1fr; grid-template-rows: repeat(5, 160px); }
+      .rg-gallery .gallery-featured { grid-column: span 1; }
+      .hero-right { height: 200px; }
+    }
+
     @media (max-width: 768px) {
       .hero-left { padding: 7rem 1.5rem 3rem; }
       .stat-num { font-size: 2.25rem; }
@@ -339,7 +448,7 @@
         <img src="./Frontline Restoration Logo Transparent.png" alt="Frontline Restoration LLC" style="height:105px;width:auto;object-fit:contain;" />
       </a>
 
-      <div class="hidden lg:flex" style="display:flex;align-items:center;gap:2.25rem;">
+      <div id="nav-desktop">
         <a href="#services"  class="nav-link">Services</a>
         <a href="#about"     class="nav-link">About Us</a>
         <a href="#insurance" class="nav-link">Insurance</a>
@@ -350,9 +459,9 @@
       <div style="display:flex;align-items:center;gap:1rem;">
         <a href="tel:+15034000000" class="btn-nav">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
-          Get Help Now
+          <span class="btn-nav-text">Get Help Now</span>
         </a>
-        <button id="hamburger" style="display:none;flex-direction:column;gap:5px;padding:6px;background:none;border:none;cursor:pointer;" aria-label="Menu">
+        <button id="hamburger" style="flex-direction:column;gap:5px;padding:6px;background:none;border:none;cursor:pointer;" aria-label="Menu">
           <span style="display:block;width:22px;height:2px;background:#f0f2f5;transition:transform 0.2s;"></span>
           <span style="display:block;width:22px;height:2px;background:#f0f2f5;transition:opacity 0.2s;"></span>
           <span style="display:block;width:22px;height:2px;background:#f0f2f5;transition:transform 0.2s;"></span>
@@ -398,7 +507,7 @@
           Local, family-owned residential restoration in West Linn &amp; Lake Oswego. We handle the fire, water, and storm damage—and we fight the insurance company so you don't have to.
         </p>
 
-        <div class="fade-up d4" style="display:flex;flex-wrap:wrap;gap:0.875rem;margin-bottom:2.5rem;">
+        <div class="fade-up d4 hero-btns" style="display:flex;flex-wrap:wrap;gap:0.875rem;margin-bottom:2.5rem;">
           <a href="tel:+15034000000" class="btn-primary">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             Call Now: 24/7 Emergency
@@ -448,8 +557,8 @@
        3-STEP BANNER
   ════════════════════════════════════════════ -->
   <section id="steps">
-    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);">
+    <div class="sec-inner" style="max-width:1280px;margin:0 auto;padding:0 2rem;">
+      <div class="rg-steps">
 
         <div class="step-card" style="border-right:1px solid rgba(179,154,112,0.15);">
           <div class="step-num">01</div>
@@ -492,9 +601,9 @@
   <!-- ════════════════════════════════════════════
        ABOUT US — THE GUIDE
   ════════════════════════════════════════════ -->
-  <section id="about" style="background:#10141a;padding:6rem 0;">
-    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+  <section id="about" class="sec-section" style="background:#10141a;padding:6rem 0;">
+    <div class="sec-inner" style="max-width:1280px;margin:0 auto;padding:0 2rem;">
+      <div class="rg-split" style="align-items:center;">
 
         <!-- Text -->
         <div>
@@ -532,7 +641,7 @@
         </div>
 
         <!-- Images: two stacked -->
-        <div style="display:grid;grid-template-rows:1fr 1fr;gap:1rem;height:560px;">
+        <div class="about-imgs" style="display:grid;grid-template-rows:1fr 1fr;gap:1rem;height:560px;">
           <div class="img-wrap">
             <img src="https://placehold.co/580x280/1e2a3a/1e2a3a" alt="Clint and Amber Duncan" />
             <!-- Bronze tint overlay for top image -->
@@ -562,8 +671,8 @@
   <!-- ════════════════════════════════════════════
        SERVICES
   ════════════════════════════════════════════ -->
-  <section id="services" style="background:#0a0e13;padding:6rem 0;">
-    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;">
+  <section id="services" class="sec-section" style="background:#0a0e13;padding:6rem 0;">
+    <div class="sec-inner" style="max-width:1280px;margin:0 auto;padding:0 2rem;">
 
       <div style="text-align:center;margin-bottom:3.5rem;">
         <div class="section-label center" style="margin-bottom:0.875rem;">What We Restore</div>
@@ -575,7 +684,7 @@
         </p>
       </div>
 
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+      <div class="rg-3col">
 
         <div class="service-card">
           <div class="img-wrap" style="height:200px;">
@@ -634,7 +743,7 @@
       </div>
 
       <!-- Additional 3 services -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem;">
+      <div class="rg-3col" style="margin-top:1.5rem;">
         <div class="value-card" style="display:flex;align-items:flex-start;gap:1rem;">
           <div style="width:38px;height:38px;background:rgba(64,185,195,0.1);border:1px solid rgba(64,185,195,0.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#40b9c3" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -671,13 +780,13 @@
   <!-- ════════════════════════════════════════════
        INSURANCE — THE VILLAIN
   ════════════════════════════════════════════ -->
-  <section id="insurance" style="position:relative;padding:6rem 0;overflow:hidden;">
+  <section id="insurance" class="sec-section" style="position:relative;padding:6rem 0;overflow:hidden;">
     <div style="position:absolute;inset:0;background:linear-gradient(135deg,#10141a 0%,#172a3a 55%,#10141a 100%);"></div>
     <div style="position:absolute;top:0;right:0;width:650px;height:650px;background:radial-gradient(circle at 80% 20%,rgba(64,185,195,0.07) 0%,transparent 60%);pointer-events:none;"></div>
     <div style="position:absolute;bottom:0;left:0;width:400px;height:400px;background:radial-gradient(circle at 20% 80%,rgba(179,154,112,0.06) 0%,transparent 60%);pointer-events:none;"></div>
 
     <div style="position:relative;max-width:1280px;margin:0 auto;padding:0 2rem;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+      <div class="rg-split" style="align-items:center;">
 
         <div>
           <div class="section-label" style="margin-bottom:1.25rem;">The Insurance Maze</div>
@@ -734,7 +843,7 @@
             <img src="https://placehold.co/600x480/151c24/151c24" alt="Insurance advocacy" />
             <div class="overlay-dark"></div>
           </div>
-          <div style="position:absolute;top:2rem;right:-1.5rem;z-index:10;background:#11161d;border:1px solid rgba(179,154,112,0.3);padding:1.25rem 1.5rem;box-shadow:0 8px 40px rgba(0,0,0,0.55);">
+          <div class="ins-stat-card" style="position:absolute;top:2rem;right:-1.5rem;z-index:10;background:#11161d;border:1px solid rgba(179,154,112,0.3);padding:1.25rem 1.5rem;box-shadow:0 8px 40px rgba(0,0,0,0.55);">
             <div class="stat-num" style="font-size:2.25rem;">6–12</div>
             <div style="font-family:'Montserrat',sans-serif;font-weight:300;font-size:0.75rem;color:#8a95a3;margin-top:0.25rem;line-height:1.5;">Months avg. claim wait<br/>without an advocate</div>
           </div>
@@ -748,11 +857,11 @@
   <!-- ════════════════════════════════════════════
        OUR VALUES
   ════════════════════════════════════════════ -->
-  <section style="background:#10141a;padding:6rem 0;">
-    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;">
+  <section class="sec-section" style="background:#10141a;padding:6rem 0;">
+    <div class="sec-inner" style="max-width:1280px;margin:0 auto;padding:0 2rem;">
 
       <!-- Top: heading left, image right -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;margin-bottom:3.5rem;">
+      <div class="rg-split values-top" style="align-items:center;margin-bottom:3.5rem;">
         <div>
           <div class="section-label" style="margin-bottom:1.25rem;">Why Frontline</div>
           <h2 style="font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(2rem,3vw,3rem);line-height:1.1;letter-spacing:-0.04em;color:#f0f2f5;margin:0 0 1rem;">
@@ -764,7 +873,7 @@
           </p>
           <a href="#contact" class="btn-primary">Start Your Restoration</a>
         </div>
-        <div class="img-wrap" style="height:300px;">
+        <div class="values-img img-wrap" style="height:300px;">
           <img src="https://placehold.co/600x300/1e2a3a/1e2a3a" alt="Frontline Restoration team" />
           <div class="overlay-dark"></div>
           <!-- Teal accent overlay -->
@@ -773,7 +882,7 @@
       </div>
 
       <!-- Value rows (horizontal) -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.04);">
+      <div class="rg-values-r">
 
         <div class="value-card" style="display:flex;align-items:flex-start;gap:1.25rem;border-radius:0;">
           <div style="width:46px;height:46px;background:rgba(64,185,195,0.1);border:1px solid rgba(64,185,195,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -824,7 +933,7 @@
        GALLERY GRID
   ════════════════════════════════════════════ -->
   <section style="background:#0a0e13;padding:0;">
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:220px 220px;">
+    <div class="rg-gallery">
 
       <div class="gallery-item">
         <img src="https://placehold.co/400x220/1e2a3a/1e2a3a" alt="Before restoration" />
@@ -833,7 +942,7 @@
         </div>
       </div>
 
-      <div class="gallery-item" style="grid-column:span 2;grid-row:span 2;">
+      <div class="gallery-item gallery-featured" style="grid-column:span 2;grid-row:span 2;">
         <img src="https://placehold.co/800x440/151c24/151c24" alt="Major restoration project" style="height:100%;" />
         <div class="gallery-overlay">
           <span style="font-family:'Inter',sans-serif;font-weight:600;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:#40b9c3;">Complete Restoration</span>
@@ -869,8 +978,8 @@
        STATS STRIP
   ════════════════════════════════════════════ -->
   <section style="background:#10141a;border-top:1px solid rgba(179,154,112,0.1);border-bottom:1px solid rgba(179,154,112,0.1);padding:4.5rem 0;">
-    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;">
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);text-align:center;">
+    <div class="sec-inner" style="max-width:1280px;margin:0 auto;padding:0 2rem;">
+      <div class="rg-stats">
 
         <div style="padding:0 2rem;">
           <div class="stat-num">100%</div>
@@ -895,9 +1004,9 @@
   <!-- ════════════════════════════════════════════
        SERVICE AREAS
   ════════════════════════════════════════════ -->
-  <section id="areas" style="background:#0a0e13;padding:6rem 0;">
-    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+  <section id="areas" class="sec-section" style="background:#0a0e13;padding:6rem 0;">
+    <div class="sec-inner" style="max-width:1280px;margin:0 auto;padding:0 2rem;">
+      <div class="rg-split" style="align-items:center;">
 
         <div class="img-wrap" style="height:380px;">
           <img src="https://placehold.co/600x380/1e2a3a/1e2a3a" alt="West Linn and Lake Oswego service area" />
@@ -935,7 +1044,7 @@
   <!-- ════════════════════════════════════════════
        CTA / CONTACT
   ════════════════════════════════════════════ -->
-  <section id="contact" style="position:relative;padding:6rem 0;overflow:hidden;">
+  <section id="contact" class="sec-section" style="position:relative;padding:6rem 0;overflow:hidden;">
     <div style="position:absolute;inset:0;background:linear-gradient(135deg,#172a3a 0%,#10141a 60%,#11161d 100%);"></div>
     <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(179,154,112,0.09) 0%,transparent 65%);pointer-events:none;"></div>
     <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(179,154,112,0.45),transparent);"></div>
@@ -955,7 +1064,7 @@
         Don't navigate the insurance process alone. Call us directly — you'll reach Clint, not a call center — and we'll have a plan in motion within hours.
       </p>
 
-      <div style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:3rem;">
+      <div class="cta-btns" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-bottom:3rem;">
         <a href="tel:+15034000000" class="btn-primary" style="font-size:0.82rem;padding:1rem 2rem;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
           Call Now: 24/7 Emergency Response
@@ -967,7 +1076,7 @@
       </div>
 
       <!-- Contact row -->
-      <div style="display:flex;flex-wrap:wrap;gap:2rem;justify-content:center;">
+      <div class="contact-row" style="display:flex;flex-wrap:wrap;gap:2rem;justify-content:center;">
         <div style="display:flex;align-items:center;gap:0.625rem;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b39a70" stroke-width="1.5"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
           <span style="font-family:'Montserrat',sans-serif;font-weight:300;font-size:0.82rem;color:#8a95a3;">(503) 400-0000</span>
@@ -990,9 +1099,9 @@
        FOOTER
   ════════════════════════════════════════════ -->
   <footer style="background:#0a0e13;border-top:1px solid rgba(179,154,112,0.12);padding:4rem 0 2rem;">
-    <div style="max-width:1280px;margin:0 auto;padding:0 2rem;">
+    <div class="sec-inner" style="max-width:1280px;margin:0 auto;padding:0 2rem;">
 
-      <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;margin-bottom:3rem;">
+      <div class="rg-footer">
 
         <!-- Brand -->
         <div>
