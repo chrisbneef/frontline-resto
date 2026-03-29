@@ -28,10 +28,10 @@ const browser = await puppeteer.launch({
 
 const page = await browser.newPage();
 await page.setViewport({ width: 1440, height: 900 });
-await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
+await page.goto(url, { waitUntil: 'networkidle0', timeout: 60000 });
 
-// Wait a moment for fonts/animations
-await new Promise(r => setTimeout(r, 1500));
+// Wait for external images and fonts to render
+await new Promise(r => setTimeout(r, 4000));
 
 await page.screenshot({ path: outputPath, fullPage: true });
 await browser.close();
