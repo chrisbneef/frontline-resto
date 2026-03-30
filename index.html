@@ -653,15 +653,47 @@
               <div style="font-family:'Montserrat',sans-serif;font-weight:300;font-size:0.75rem;color:#b39a70;">Owners — Frontline Restoration LLC</div>
             </div>
           </div>
-          <div class="img-wrap">
-            <img src="./img/about-work.jpg" alt="Restoration work in progress" />
-            <!-- Teal tint overlay for bottom image -->
-            <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(64,185,195,0.12) 0%,transparent 60%);pointer-events:none;"></div>
-            <div class="overlay-dark"></div>
-            <div style="position:absolute;bottom:1rem;right:1rem;z-index:2;background:rgba(16,20,26,0.82);border:1px solid rgba(64,185,195,0.25);padding:0.625rem 1rem;backdrop-filter:blur(6px);">
-              <div style="font-family:'Inter',sans-serif;font-weight:600;font-size:0.75rem;color:#40b9c3;letter-spacing:0.08em;text-transform:uppercase;">West Linn, OR</div>
+          <!-- YouTube embed — click to play -->
+          <div id="yt-container" style="position:relative;overflow:hidden;background:#0d1117;cursor:pointer;" onclick="playYT()">
+            <!-- Thumbnail -->
+            <div id="yt-thumb" style="position:absolute;inset:0;">
+              <img src="https://img.youtube.com/vi/neMnGrBZ5nU/maxresdefault.jpg"
+                   alt="Watch: Clint & Amber Duncan interview"
+                   style="width:100%;height:100%;object-fit:cover;display:block;" />
+              <!-- Dark overlay -->
+              <div style="position:absolute;inset:0;background:rgba(16,20,26,0.45);"></div>
+              <!-- Bronze tint -->
+              <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(179,154,112,0.12) 0%,transparent 60%);pointer-events:none;"></div>
+              <!-- Play button -->
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+                <div style="width:64px;height:64px;border-radius:50%;background:#b39a70;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(179,154,112,0.4);transition:transform 0.2s ease,background 0.2s ease;" onmouseover="this.style.transform='scale(1.1)';this.style.background='#c9b080'" onmouseout="this.style.transform='scale(1)';this.style.background='#b39a70'">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="#10141a" style="margin-left:3px;"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </div>
+              <!-- Caption -->
+              <div style="position:absolute;bottom:1rem;left:1rem;right:1rem;z-index:2;background:rgba(16,20,26,0.86);border:1px solid rgba(179,154,112,0.3);padding:0.75rem 1rem;backdrop-filter:blur(8px);">
+                <div style="font-family:'Inter',sans-serif;font-weight:600;font-size:0.82rem;color:#f0f2f5;">Watch Our Story</div>
+                <div style="font-family:'Montserrat',sans-serif;font-weight:300;font-size:0.72rem;color:#b39a70;">Clint &amp; Amber Duncan — Interview</div>
+              </div>
             </div>
+            <!-- iframe — hidden until clicked -->
+            <iframe id="yt-player"
+              src=""
+              data-src="https://www.youtube.com/embed/neMnGrBZ5nU?autoplay=1&rel=0&modestbranding=1"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              style="display:none;position:absolute;inset:0;width:100%;height:100%;border:none;">
+            </iframe>
           </div>
+          <script>
+            function playYT() {
+              var thumb = document.getElementById('yt-thumb');
+              var player = document.getElementById('yt-player');
+              thumb.style.display = 'none';
+              player.src = player.getAttribute('data-src');
+              player.style.display = 'block';
+            }
+          </script>
         </div>
 
       </div>
